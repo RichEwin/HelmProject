@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: {{ .Values.deployment.image }}:{{ .Values.deployment.tag }}
+          imagePullPolicy: {{ .Values.deployment.imagePullPolicy }}
+          securityContext:
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - SETUID
+                - SETGID
+          ports:
+            - containerPort: {{ .Values.containerPort }}
+      restartPolicy: Always

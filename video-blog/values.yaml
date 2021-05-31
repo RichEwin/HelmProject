@@ -1,0 +1,15 @@
+deployment:
+  image: richewin/video-blog
+  tag: latest
+  imagePullPolicy: Always
+
+replicaCount: 2
+
+containerPort: 80
+
+service:
+  port: 3000
+  type: NodePort
+
+
+
